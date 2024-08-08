@@ -13,12 +13,12 @@ type User struct {
 	UpdateTime time.Time `json:"updateTime" gorm:"column:updateTime"`
 }
 type Users struct {
-	Uid      int       `json:"uid"`
-	UserName string    `json:"userName"`
-	Passwd   string    `json:"passwd"`
-	Avatar   string    `json:"avatar"`
-	CreateAt time.Time `json:"create_at"`
-	UpdateAt time.Time `json:"update_at"`
+	Id         int       `json:"id"`
+	UserName   string    `json:"username"`
+	Password   string    `json:"password"`
+	Avatar     string    `json:"avatar"`
+	CreateTime time.Time `json:"createTime"`
+	UpdateTime time.Time `json:"updateTime"`
 }
 type UserInfo struct {
 	Uid      int    `json:"uid"`

@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"naive-admin-go/common"
 	"naive-admin-go/dao"
@@ -21,7 +22,7 @@ func (*Api) GetPost(c *gin.Context) {
 	path := r.URL.Path
 	pIdStr := strings.TrimPrefix(path, "/api/v1/post/")
 	pid, err := strconv.Atoi(pIdStr)
-
+	fmt.Println(pid)
 	if err != nil {
 		comnon.Error(w, errors.New("不识别此请求路径"))
 		return

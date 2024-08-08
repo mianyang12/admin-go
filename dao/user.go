@@ -7,7 +7,7 @@ import (
 )
 
 func GetUserNameById(userId int) string {
-	row := DB.QueryRow("select username from blog_user where id=?", userId)
+	row := DB.QueryRow("SELECT username FROM blog_user WHERE id=?", userId)
 	if row.Err() != nil {
 		log.Println(row.Err())
 	}
@@ -16,7 +16,7 @@ func GetUserNameById(userId int) string {
 	return userName
 }
 
-func GetUser(username, password string) *model.User {
+func GetUser(username, password string) *model.Users {
 	// 查询数据库
 	row := DB.QueryRow(
 		"SELECT * FROM blog_user WHERE username = ? AND password = ? ",
@@ -28,13 +28,12 @@ func GetUser(username, password string) *model.User {
 		log.Println(row.Err())
 		return nil
 	}
-	log.Println("", row, username, password)
-	var user = &model.User{}
-	err := row.Scan(&user.ID, &user.Username, &user.Password, &user.CreateTime, &user.UpdateTime)
+	var users = &model.Users{}
+	err := row.Scan(&users.Id, &users.UserName, &users.Password, &users.Avatar, &users.CreateTime, &users.UpdateTime)
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
-	fmt.Println(user)
-	return user // 返回用户信息
+	fmt.Println(users)
+	return users // 返回用户信息
 }
