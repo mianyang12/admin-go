@@ -3,7 +3,7 @@
  * @LastEditor: Ronnie Zhang
  * @LastEditTime: 2023/12/05 21:30:57
  * @Email: zclzone@outlook.com
- * Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ * Copyright © 2024 Go_blog |
  **********************************/
 
 import { defineConfig, presetUno, presetIcons, presetAttributify } from 'unocss'

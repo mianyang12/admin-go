@@ -55,13 +55,14 @@ func (auth) Login(c *gin.Context) {
 	})
 }
 
-func (auth) password(c *gin.Context) {
+func (auth) Password(c *gin.Context) {
 	var params inout.AuthPwReq
 	err := c.Bind(&params)
 	if err != nil {
 		Resp.Err(c, 20001, err.Error())
 		return
 	}
+
 	uid, _ := c.Get("uid")
 	var oldCun int64
 	db.Dao.Model(model.User{}).Where("id=? and password=?", uid, fmt.Sprintf("%x", md5.Sum([]byte(params.OldPassword))))

@@ -20,6 +20,10 @@ type user struct {
 func (user) Detail(c *gin.Context) {
 	var data = &inout.UserDetailRes{}
 	var uid, _ = c.Get("uid")
+	//var userDetailRes = &inout.UserDetailRes{}
+	//if err := db.Dao.Preload("Profile").Preload("Roles").Preload("CurrentRole").First(&userDetailRes, userID).Error; err != nil {
+	//	// 处理错误
+	//}
 	db.Dao.Model(model.User{}).Where("id=?", uid).Find(&data)
 	db.Dao.Model(model.Profile{}).Where("userId=?", uid).Find(&data.Profile)
 	urolIdList := db.Dao.Model(model.UserRolesRole{}).Where("userId=?", uid).Select("roleId")

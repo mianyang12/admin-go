@@ -25,40 +25,12 @@
       </n-card>
       <n-card class="ml-12 w-70%" title="✨ 欢迎使用 Vue Naive Admin 2.0">
         <template #header-extra>
-          <a
-            class="text-14 text-primary text-highlight hover:underline hover:opacity-80"
-            href="https://isme.top"
-            target="_blank"
-            @click.prevent="message?.info('官网正在火速开发中...')"
-          >
-            isme.top
-          </a>
+
         </template>
 
-        <p class="opacity-60">
-          这是一款极简风格的后台管理模板，包含前后端解决方案，前端使用 Vite + Vue3 + Pinia +
-          Unocss，后端使用 Nestjs + TypeOrm +
-          MySql，简单易用，赏心悦目，历经十几次重构和细节打磨，诚意满满！！
-        </p>
+
         <footer class="mt-12 flex items-center justify-end">
-          <n-button
-            type="primary"
-            ghost
-            tag="a"
-            href="https://docs.isme.top/web/#/624306705/188522224"
-            target="__blank"
-          >
-            开发文档
-          </n-button>
-          <n-button
-            type="primary"
-            class="ml-12"
-            tag="a"
-            href="https://github.com/zclzone/vue-naive-admin/tree/2.x"
-            target="__blank"
-          >
-            代码仓库
-          </n-button>
+
         </footer>
       </n-card>
     </div>
