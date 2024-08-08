@@ -13,6 +13,8 @@ import (
 func Init(r *gin.Engine) {
 	// 使用 cookie 存储会话数据
 	r.Use(sessions.Sessions("mysession", cookie.NewStore([]byte("captch"))))
+	// CORS 设置
+	r.Use(middleware.Cors())
 	// 静态文件服务
 	r.Static("/resource", "./public/resource")
 	r.Static("/p/resource", "./public/resource")
@@ -45,52 +47,34 @@ func Init(r *gin.Engine) {
 		a.DELETE("/post/delete/:pid", api.API.DeletePost)
 	}
 
-	// CORS 设置
-	r.Use(middleware.Cors())
-
 	// 后台路由
-	auth := r.Group("/auth")
-	{
-		auth.POST("/login", api.Auth.Login)
-		auth.GET("/captcha", api.Auth.Captcha)
+	r.POST("/auth/login", api.Auth.Login)
+	r.GET("/auth/captcha", api.Auth.Captcha)
 
-		// 添加 JWT 验证中间件
-		auth.Use(middleware.Jwt())
-		auth.POST("/logout", api.Auth.Logout)
-		auth.POST("/password", api.Auth.Logout) // 注意这里可能是一个错误，因为两个 POST 请求都映射到了同一处理函数
-	}
+	r.Use(middleware.Jwt())
+	r.POST("/auth/logout", api.Auth.Logout)
+	r.POST("/auth/password", api.Auth.Logout)
 
-	// 用户管理路由
-	user := r.Group("/user")
-	{
-		user.GET("/", api.User.List)
-		user.POST("/", api.User.Add)
-		user.DELETE("/:id", api.User.Delete)
-		user.PATCH("/:id", api.User.Update)
-		user.PATCH("/profile/:id", api.User.Profile)
-		user.GET("/detail", api.User.Detail)
-	}
+	r.GET("/user", api.User.List)
+	r.POST("/user", api.User.Add)
+	r.DELETE("/user/:id", api.User.Delete)
+	r.PATCH("/user/password/reset/:id", api.User.Update)
+	r.PATCH("/user/:id", api.User.Update)
+	r.PATCH("/user/profile/:id", api.User.Profile)
+	r.GET("/user/detail", api.User.Detail)
 
-	// 角色管理路由
-	role := r.Group("/role")
-	{
-		role.GET("/", api.Role.List)
-		role.POST("/", api.Role.Add)
-		role.PATCH("/:id", api.Role.Update)
-		role.DELETE("/:id", api.Role.Delete)
-		role.PATCH("/users/add/:id", api.Role.AddUser)
-		role.PATCH("/users/remove/:id", api.Role.RemoveUser)
-		role.GET("/page", api.Role.ListPage)
-		role.GET("/permissions/tree", api.Role.PermissionsTree)
-	}
+	r.GET("/role", api.Role.List)
+	r.POST("/role", api.Role.Add)
+	r.PATCH("/role/:id", api.Role.Update)
+	r.DELETE("/role/:id", api.Role.Delete)
+	r.PATCH("/role/users/add/:id", api.Role.AddUser)
+	r.PATCH("/role/users/remove/:id", api.Role.RemoveUser)
+	r.GET("/role/page", api.Role.ListPage)
+	r.GET("/role/permissions/tree", api.Role.PermissionsTree)
 
-	// 权限管理路由
-	permission := r.Group("/permission")
-	{
-		permission.POST("/", api.Permissions.Add)
-		permission.PATCH("/:id", api.Permissions.PatchPermission)
-		permission.DELETE("/:id", api.Permissions.Delete)
-		permission.GET("/tree", api.Permissions.List)
-		permission.GET("/menu/tree", api.Permissions.List)
-	}
+	r.POST("/permission", api.Permissions.Add)
+	r.PATCH("/permission/:id", api.Permissions.PatchPermission)
+	r.DELETE("/permission/:id", api.Permissions.Delete)
+	r.GET("/permission/tree", api.Permissions.List)
+	r.GET("/permission/menu/tree", api.Permissions.List)
 }

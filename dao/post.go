@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"fmt"
 	"log"
 	"naive-admin-go/model"
 )
@@ -79,7 +78,7 @@ func CountGetAllPostBySlug(slug string) (count int) {
 func GetPostById(pid int) (*model.Post, error) {
 	p := &model.Post{}
 	err := DB.QueryOne(p, "select * from blog_post where pid=?", pid)
-	fmt.Println(p)
+	log.Println(p)
 	return p, err
 }
 
